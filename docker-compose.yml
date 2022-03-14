@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  idm-backend:
+    build: .
+    restart: always
+    networks:
+      - idm-backend
+    ports:    # Port where Zabbix UI is available
+      - 7000:7000
+    environment:   # The Postgres database value variable
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_HOST: ${MYSQL_DB}
+networks:
+  idm-backend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.221.0/28
