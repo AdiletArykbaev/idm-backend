@@ -1,11 +1,5 @@
 version: '3.1'
 
-secrets:
-  db_user:
-    file: ./db_user.txt
-  db_password:
-    file: ./db_password.txt
-
 services:
   idm-backend:
     build: .
@@ -14,14 +8,11 @@ services:
       - idm-backend
     ports:    # Port where Zabbix UI is available
       - 7000:7000
-    secrets:
-      - db_user
-      - db_password
     environment:   # The Postgres database value variable
-      MYSQL_USER_FILE: /run/secrets/db_user
-      MYSQL_PASSWORD_FILE: /run/secrets/db_password
-      MYSQL_DB: zabbix
-      DB_SERVER_HOST: 192.168.221.1
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_HOST: ${MYSQL_DB}
 networks:
   idm-backend:
     driver: bridge
